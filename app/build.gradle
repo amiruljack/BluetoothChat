@@ -114,6 +114,7 @@ dependencies {
     implementation 'com.github.jkwiecien:EasyImage:2.1.1'
     implementation 'io.github.kobakei:ratethisapp:1.2.0'
     implementation 'me.priyesh:chroma:1.0.2'
+    implementation 'bouncycastle:bcprov-jdk16:136'
 
     implementation 'org.koin:koin-android:1.0.2'
 
