@@ -84,20 +84,6 @@ class ScanActivity : SkeletonActivity(), ScanView {
                 }
             }
         }
-
-        findViewById<ImageView>(R.id.iv_share).setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                presenter.shareApk()
-            } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    explainAskingStoragePermission()
-                } else {
-                    ActivityCompat.requestPermissions(this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
-                }
-            }
-        }
     }
 
     override fun shareApk(uri: Uri) {
