@@ -25,9 +25,16 @@ import com.glodanif.bluetoothchat.ui.widget.ShortcutManager
 import com.glodanif.bluetoothchat.utils.LimitedQueue
 import com.glodanif.bluetoothchat.utils.Size
 import kotlinx.coroutines.*
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.File
 import java.io.IOException
+import java.io.UnsupportedEncodingException
+import java.security.InvalidKeyException
+import java.security.NoSuchAlgorithmException
+import java.security.Security
 import java.util.*
+import javax.crypto.*
+import javax.crypto.spec.SecretKeySpec
 import kotlin.coroutines.CoroutineContext
 
 class ConnectionController(private val application: ChatApplication,
@@ -486,6 +493,7 @@ class ConnectionController(private val application: ChatApplication,
         if (message.type == Contract.MessageType.MESSAGE && currentSocket != null) {
 
             handleReceivedMessage(message.uid, message.body)
+//            decryptWithAES("1234",)
 
         } else if (message.type == Contract.MessageType.DELIVERY) {
 
@@ -519,6 +527,45 @@ class ConnectionController(private val application: ChatApplication,
         } else if (message.type == Contract.MessageType.FILE_CANCELED) {
             dataTransferThread?.cancelFileTransfer()
         }
+    }
+
+    fun decryptWithAES(key: String, strToDecrypt: String?): String {
+        Security.addProvider(BouncyCastleProvider())
+        var keyBytes: ByteArray
+
+        try {
+            keyBytes = key.toByteArray(charset("UTF8"))
+            val skey = SecretKeySpec(keyBytes, "AES")
+            val input = org.bouncycastle.util.encoders.Base64
+                .decode(strToDecrypt?.trim { it <= ' ' }?.toByteArray(charset("UTF8")))
+
+            synchronized(Cipher::class.java) {
+                val cipher = Cipher.getInstance("AES/ECB/PKCS7Padding")
+                cipher.init(Cipher.DECRYPT_MODE, skey)
+
+                val plainText = ByteArray(cipher.getOutputSize(input.size))
+                var ptLength = cipher.update(input, 0, input.size, plainText, 0)
+                ptLength += cipher.doFinal(plainText, ptLength)
+                val decryptedString = String(plainText)
+                return decryptedString.trim { it <= ' ' }
+            }
+        } catch (uee: UnsupportedEncodingException) {
+            uee.printStackTrace()
+        } catch (ibse: IllegalBlockSizeException) {
+            ibse.printStackTrace()
+        } catch (bpe: BadPaddingException) {
+            bpe.printStackTrace()
+        } catch (ike: InvalidKeyException) {
+            ike.printStackTrace()
+        } catch (nspe: NoSuchPaddingException) {
+            nspe.printStackTrace()
+        } catch (nsae: NoSuchAlgorithmException) {
+            nsae.printStackTrace()
+        } catch (e: ShortBufferException) {
+            e.printStackTrace()
+        }
+
+        return "null";
     }
 
     private fun onMessageSendingFailed() {
@@ -555,8 +602,7 @@ class ConnectionController(private val application: ChatApplication,
         val device: BluetoothDevice = socket.remoteDevice
 
         val parts = message.body.split(Contract.DIVIDER)
-        val conversation = Conversation(device.address, device.name
-                ?: "?", parts[0], parts[1].toInt())
+        val conversation = Conversation(device.address, device.name?: "?", parts[0], parts[1].toInt())
 
         launch(bgContext) { conversationStorage.insertConversation(conversation) }
 
