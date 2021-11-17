@@ -132,10 +132,10 @@ class ImagePreviewActivity : SkeletonActivity(), ImagePreviewView {
 
             val runningTransitions = runningTransitionsField.get(transitionManagerClass)
                     as ThreadLocal<WeakReference<ArrayMap<ViewGroup, ArrayList<Transition>>>>
-            if (runningTransitions.get() == null || runningTransitions.get().get() == null) {
+            if (runningTransitions.get() == null || runningTransitions.get()?.get() == null) {
                 return
             }
-            val map = runningTransitions.get().get()
+            val map = runningTransitions.get()?.get()
             val decorView = window.decorView
             if (map != null && map.containsKey(decorView)) {
                 map.remove(decorView)
