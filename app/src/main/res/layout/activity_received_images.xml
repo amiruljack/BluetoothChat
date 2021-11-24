@@ -8,6 +8,7 @@
         android:id="@+id/rv_images"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#e0ffff"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_image_grid"
         tools:spanCount="3" />

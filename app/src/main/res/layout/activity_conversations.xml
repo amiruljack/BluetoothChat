@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e0ffff"
     tools:context=".ui.activity.ConversationsActivity">
 
     <include layout="@layout/content_main" />
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:tint="#1B29AF"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
     <com.google.android.material.appbar.AppBarLayout

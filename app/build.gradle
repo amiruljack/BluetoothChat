@@ -87,6 +87,8 @@ android {
 
 dependencies {
 
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     def final ROOM_VERSION = '2.0.0'
     def final LIFECYCLE_VERSION = '2.0.0'
     def final ESPRESSO_VERSION = '3.2.0-beta01'
