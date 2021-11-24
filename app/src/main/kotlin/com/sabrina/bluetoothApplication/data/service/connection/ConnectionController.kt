@@ -409,7 +409,7 @@ class ConnectionController(private val application: ChatApplication,
 
             val disconnect = message.type == Contract.MessageType.CONNECTION_REQUEST && !message.flag
 
-            dataTransferThread?.write(message.getDecodedMessage(), disconnect)
+            dataTransferThread?.write("hhhhhhhhh", disconnect)
 
             if (disconnect) {
                 dataTransferThread?.cancel(disconnect)
@@ -492,7 +492,7 @@ class ConnectionController(private val application: ChatApplication,
 
         if (message.type == Contract.MessageType.MESSAGE && currentSocket != null) {
 
-            handleReceivedMessage(message.uid, message.body)
+            handleReceivedMessage(message.uid, "yyyyyyyy")
 //            decryptWithAES("1234",)
 
         } else if (message.type == Contract.MessageType.DELIVERY) {
