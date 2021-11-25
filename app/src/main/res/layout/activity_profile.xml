@@ -21,18 +21,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#e0ffff">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="32dp"
                 android:contentDescription="@string/profile__cd__avatar_preview"
                 app:layout_constraintBottom_toTopOf="@+id/tv_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
@@ -42,11 +41,11 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="32dp"
-                android:fontFamily="@font/artifika"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@color/text_dark"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/et_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -59,15 +58,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/titillium_web_semibold"
                 android:minWidth="64dp"
-                android:textColor="#0000ff"
                 android:text="@string/profile__name"
-                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/et_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_name"
-                app:layout_constraintVertical_bias="0.44" />
+                app:layout_constraintTop_toTopOf="@+id/et_name" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -91,11 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/titillium_web_semibold"
                 android:minWidth="64dp"
-                android:textColor="#0000ff"
                 android:text="@string/profile__color"
-                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/v_color"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/v_color" />
@@ -105,10 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/titillium_web_semibold"
                 android:text="@string/profile__device"
-                android:textColor="#0000ff"
-                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_device_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_device_name" />
@@ -161,13 +150,11 @@
         android:id="@+id/btn_save"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
-        android:background="#0000ff"
-        android:fontFamily="@font/titillium_web_semibold"
+        android:background="@drawable/button_accept_background"
         android:text="@string/profile__save"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

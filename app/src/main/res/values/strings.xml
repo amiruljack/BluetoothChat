@@ -76,7 +76,7 @@
     <string name="chat__device_is_not_available">This device is not available right now, make sure it\'s paired</string>
     <string name="chat__bluetooth_required">This app requires Bluetooth enabled to work properly</string>
     <string name="chat__connected_to_another"><![CDATA[You are currently connected to <b>%s</b>. You can connect to this device but current connection will be interrupted]]></string>
-    <string name="chat__message_hint">Write Message...</string>
+    <string name="chat__message_hint">Message</string>
     <string name="chat__chat">Chat</string>
     <string name="chat__too_big_image">This image it too big. Max file size which you can send via Bluetooth Chat is %s</string>
     <string name="chat__removed_image">Removed image</string>

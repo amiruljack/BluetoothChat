@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e0ffff"
     android:orientation="vertical">
 
     <TextView
@@ -13,8 +12,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/settings__appearance"
-        android:textColor="#0000ff"
-        android:textSize="20dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -35,7 +34,7 @@
             android:layout_marginEnd="16dp"
             android:layout_toStartOf="@+id/v_color"
             android:text="@string/settings__chat_background_color"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <View
             android:id="@+id/v_color"
@@ -60,20 +59,17 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings__night_mode"
-            android:textColor="#0000ff"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_night_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="12sp"
             tools:text="On" />
     </LinearLayout>
 
@@ -85,15 +81,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/settings__notifications"
-        android:textColor="#0000ff"
-        android:textSize="20dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
-    <com.sabrina.bluetoothApplication.ui.widget.SwitchPreference
+    <com.glodanif.bluetoothchat.ui.widget.SwitchPreference
         android:id="@+id/sp_sound"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        app:preferenceText="Sound" />
+        android:layout_height="wrap_content"
+        app:preferenceText="@string/settings__sound" />
 
     <TextView
         android:layout_width="match_parent"
@@ -102,11 +98,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/settings__discovery"
-        android:textColor="#0000ff"
-        android:textSize="20dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
-    <com.sabrina.bluetoothApplication.ui.widget.SwitchPreference
+    <com.glodanif.bluetoothchat.ui.widget.SwitchPreference
         android:id="@+id/sp_class_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

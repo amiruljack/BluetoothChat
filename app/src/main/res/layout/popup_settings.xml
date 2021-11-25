@@ -6,21 +6,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="invisible"
-    android:background="#f8f8ff"
     tools:visibility="visible">
 
     <androidx.cardview.widget.CardView
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="#f8f8ff"
         app:cardBackgroundColor="?android:colorBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:background="#f8f8ff"
             android:orientation="vertical">
 
             <LinearLayout
@@ -47,7 +44,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:fontFamily="@font/titillium_web_semibold"
                     android:textSize="16sp"
                     tools:text="@tools:sample/full_names" />
 
@@ -120,7 +116,22 @@
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp"/>
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    app:srcCompat="@drawable/ic_info_outline_black_24dp"
+                    app:tint="?android:textColorPrimary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about__about"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

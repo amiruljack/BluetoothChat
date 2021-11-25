@@ -8,7 +8,7 @@
     android:clipToPadding="false"
     tools:context=".ui.activity.ChatActivity">
 
-    <com.sabrina.bluetoothApplication.ui.widget.ActionView
+    <com.glodanif.bluetoothchat.ui.widget.ActionView
         android:id="@+id/av_actions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -63,14 +63,12 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground"
                     android:contentDescription="@string/chat__cd__send_image_button"
-                    android:tint="#1763DA"
                     app:srcCompat="@drawable/ic_photo" />
 
                 <ImageButton
                     android:id="@+id/ib_send"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:tint="#1763DA"
                     android:background="?android:attr/selectableItemBackground"
                     android:contentDescription="@string/chat__cd__send_text_button"
                     app:srcCompat="@drawable/ic_send_black_24dp" />
@@ -166,10 +164,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:stackFromEnd="true"
-            android:background="#e0ffff"
             tools:listitem="@layout/item_message_text_foreign" />
 
-        <com.sabrina.bluetoothApplication.ui.widget.GoDownButton
+        <com.glodanif.bluetoothchat.ui.widget.GoDownButton
             android:id="@+id/gdb_go_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
