@@ -16,7 +16,6 @@ import com.glodanif.bluetoothchat.data.model.ConversationsStorage
 import com.glodanif.bluetoothchat.data.model.MessagesStorage
 import com.glodanif.bluetoothchat.data.model.ProfileManager
 import com.glodanif.bluetoothchat.data.model.UserPreferences
-import com.glodanif.bluetoothchat.data.service.ChCrypto
 import com.glodanif.bluetoothchat.data.service.message.Contract
 import com.glodanif.bluetoothchat.data.service.message.Message
 import com.glodanif.bluetoothchat.data.service.message.PayloadType
@@ -41,7 +40,8 @@ class ConnectionController(
     private val profileManager: ProfileManager,
     private val shortcutManager: ShortcutManager,
     private val uiContext: CoroutineDispatcher = Dispatchers.Main,
-    private val bgContext: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
+    private val bgContext: CoroutineDispatcher = Dispatchers.IO
+) : CoroutineScope {
 
     private val blAppName = application.getString(R.string.bl_app_name)
     private val blAppUUID = UUID.fromString(application.getString(R.string.bl_app_uuid))
@@ -52,6 +52,7 @@ class ConnectionController(
 
     @Volatile
     private var connectionState: ConnectionState = ConnectionState.NOT_CONNECTED
+
     @Volatile
     private var connectionType: ConnectionType? = null
 
@@ -184,8 +185,12 @@ class ConnectionController(
 
             override fun onConnectionPrepared(type: ConnectionType) {
 
-                onNewForegroundMessage?.invoke(application.getString(R.string.notification__connected_to, socket.remoteDevice.name
-                        ?: "?"))
+                onNewForegroundMessage?.invoke(
+                    application.getString(
+                        R.string.notification__connected_to, socket.remoteDevice.name
+                            ?: "?"
+                    )
+                )
                 connectionState = ConnectionState.PENDING
 
                 if (type == ConnectionType.OUTCOMING) {
@@ -217,8 +222,10 @@ class ConnectionController(
                     val silently = application.currentChat != null && currentSocket != null &&
                             application.currentChat.equals(currentSocket?.remoteDevice?.address)
 
-                    view.showFileTransferNotification(it.displayName, it.deviceName,
-                            it.deviceAddress, file, 0, silently)
+                    view.showFileTransferNotification(
+                        it.displayName, it.deviceName,
+                        it.deviceAddress, file, 0, silently
+                    )
                 }
             }
 
@@ -290,8 +297,10 @@ class ConnectionController(
                         val silently = application.currentChat != null && currentSocket != null &&
                                 application.currentChat.equals(currentSocket?.remoteDevice?.address)
 
-                        view.showFileTransferNotification(it.displayName, it.deviceName,
-                                it.deviceAddress, file, 0, silently)
+                        view.showFileTransferNotification(
+                            it.displayName, it.deviceName,
+                            it.deviceAddress, file, 0, silently
+                        )
                     }
                 }
             }
@@ -318,14 +327,18 @@ class ConnectionController(
                         filePath = path
                     }
 
-                    val partner = Person.Builder().setName(currentConversation?.displayName
-                            ?: "?").build()
+                    val partner = Person.Builder().setName(
+                        currentConversation?.displayName
+                            ?: "?"
+                    ).build()
                     shallowHistory.add(NotificationCompat.MessagingStyle.Message(imageText, message.date.time, partner))
                     if (!subject.isAnybodyListeningForMessages() || application.currentChat == null || !application.currentChat.equals(address)) {
                         //FIXME: Fixes not appearing notification
                         view.dismissMessageNotification()
-                        view.showNewMessageNotification(imageText, currentConversation?.displayName,
-                                device.name, address, shallowHistory, preferences.isSoundEnabled())
+                        view.showNewMessageNotification(
+                            imageText, currentConversation?.displayName,
+                            device.name, address, shallowHistory, preferences.isSoundEnabled()
+                        )
                     } else {
                         message.seenHere = true
                     }
@@ -371,11 +384,11 @@ class ConnectionController(
         val filesDirectory = File(Environment.getExternalStorageDirectory(), application.getString(R.string.app_name))
 
         dataTransferThread =
-                object : DataTransferThread(socket, type, transferEventsListener, filesDirectory, fileEventsListener, eventsStrategy) {
-                    override fun shouldRun(): Boolean {
-                        return isConnectedOrPending()
-                    }
+            object : DataTransferThread(socket, type, transferEventsListener, filesDirectory, fileEventsListener, eventsStrategy) {
+                override fun shouldRun(): Boolean {
+                    return isConnectedOrPending()
                 }
+            }
         dataTransferThread?.prepare()
         dataTransferThread?.start()
 
@@ -441,13 +454,19 @@ class ConnectionController(
 
     fun approveConnection() {
         println("094")
-        sendMessage(contract.createAcceptConnectionMessage(
-                profileManager.getUserName(), profileManager.getUserColor()))
+        sendMessage(
+            contract.createAcceptConnectionMessage(
+                profileManager.getUserName(), profileManager.getUserColor()
+            )
+        )
     }
 
     fun rejectConnection() {
-        sendMessage(contract.createRejectConnectionMessage(
-                profileManager.getUserName(), profileManager.getUserColor()))
+        sendMessage(
+            contract.createRejectConnectionMessage(
+                profileManager.getUserName(), profileManager.getUserColor()
+            )
+        )
     }
 
     fun getTransferringFile(): TransferringFile? {
@@ -476,11 +495,13 @@ class ConnectionController(
                 println("078")
                 messagesStorage.insertMessage(sentMessage)
                 shallowHistory.add(NotificationCompat.MessagingStyle.Message(sentMessage.text, sentMessage.date.time, me))
-//                sentMessage.text = ChCrypto.aesEncrypt(sentMessage.text,"12345678901234567890123456789012").toString();
-                println("test send ${ChCrypto.aesEncrypt(sentMessage.text,"12345678901234567890123456789012").toString()}")
+
+
                 if ((!subject.isAnybodyListeningForMessages() || application.currentChat == null || !application.currentChat.equals(device.address)) && justRepliedFromNotification) {
-                    view.showNewMessageNotification(message.body, currentConversation?.displayName,
-                            device.name, device.address, shallowHistory, preferences.isSoundEnabled())
+                    view.showNewMessageNotification(
+                        message.body, currentConversation?.displayName,
+                        device.name, device.address, shallowHistory, preferences.isSoundEnabled()
+                    )
                     justRepliedFromNotification = false
                 }
 
@@ -496,17 +517,13 @@ class ConnectionController(
 
         val message = Message(messageBody)
 
-        println("421")
         if (message.type == Contract.MessageType.MESSAGE && currentSocket != null) {
 
-            println("821")
-            handleReceivedMessage(message.uid, message.body)
-            println("test receive ${ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012")}")
-//            message.body = ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012");
+            handleReceivedMessage(message.uid, message.body);
+
         } else if (message.type == Contract.MessageType.DELIVERY) {
 
             if (message.flag) {
-                println("022")
                 subject.handleMessageDelivered(message.uid)
             } else {
                 subject.handleMessageNotDelivered(message.uid)
@@ -514,13 +531,11 @@ class ConnectionController(
         } else if (message.type == Contract.MessageType.SEEING) {
 
             if (message.flag) {
-                println("021")
                 subject.handleMessageSeen(message.uid)
             }
         } else if (message.type == Contract.MessageType.CONNECTION_RESPONSE) {
 
             if (message.flag) {
-                println("023")
                 handleConnectionApproval(message)
             } else {
                 connectionState = ConnectionState.REJECTED
@@ -530,7 +545,6 @@ class ConnectionController(
         } else if (message.type == Contract.MessageType.CONNECTION_REQUEST && currentSocket != null) {
 
             if (message.flag) {
-                println("024")
                 handleConnectionRequest(message)
             } else {
                 println("025")
@@ -553,11 +567,16 @@ class ConnectionController(
         val receivedMessage = ChatMessage(uid, device.address, Date(), false, text)
 
         val partner = Person.Builder().setName(currentConversation?.displayName ?: "?").build()
-        shallowHistory.add(NotificationCompat.MessagingStyle.Message(
-                receivedMessage.text, receivedMessage.date.time, partner))
+        shallowHistory.add(
+            NotificationCompat.MessagingStyle.Message(
+                receivedMessage.text, receivedMessage.date.time, partner
+            )
+        )
         if (!subject.isAnybodyListeningForMessages() || application.currentChat == null || !application.currentChat.equals(device.address)) {
-            view.showNewMessageNotification(text, currentConversation?.displayName,
-                    device.name, device.address, shallowHistory, preferences.isSoundEnabled())
+            view.showNewMessageNotification(
+                text, currentConversation?.displayName,
+                device.name, device.address, shallowHistory, preferences.isSoundEnabled()
+            )
             println("005")
         } else {
             println("003")
@@ -579,8 +598,10 @@ class ConnectionController(
         val device: BluetoothDevice = socket.remoteDevice
 
         val parts = message.body.split(Contract.DIVIDER)
-        val conversation = Conversation(device.address, device.name
-                ?: "?", parts[0], parts[1].toInt())
+        val conversation = Conversation(
+            device.address, device.name
+                ?: "?", parts[0], parts[1].toInt()
+        )
 
         launch(bgContext) { conversationStorage.insertConversation(conversation) }
 
@@ -591,7 +612,8 @@ class ConnectionController(
 
         if (!application.isConversationsOpened && !(application.currentChat != null && application.currentChat.equals(device.address))) {
             view.showConnectionRequestNotification(
-                    "${conversation.displayName} (${conversation.deviceName})", conversation.deviceAddress, preferences.isSoundEnabled())
+                "${conversation.displayName} (${conversation.deviceName})", conversation.deviceAddress, preferences.isSoundEnabled()
+            )
         }
     }
 
@@ -600,11 +622,15 @@ class ConnectionController(
         val device: BluetoothDevice = socket.remoteDevice
 
         val parts = message.body.split(Contract.DIVIDER)
-        val conversation = Conversation(device.address, device.name
-                ?: "?", parts[0], parts[1].toInt())
+        val conversation = Conversation(
+            device.address, device.name
+                ?: "?", parts[0], parts[1].toInt()
+        )
 
-        launch(bgContext) { conversationStorage.insertConversation(conversation)
-        println("002")}
+        launch(bgContext) {
+            conversationStorage.insertConversation(conversation)
+            println("002")
+        }
 
         currentConversation = conversation
         contract setupWith if (parts.size >= 3) parts[2].trim().toInt() else 0
@@ -649,7 +675,7 @@ class ConnectionController(
         init {
             try {
                 serverSocket = BluetoothAdapter.getDefaultAdapter()
-                        ?.listenUsingRfcommWithServiceRecord(blAppName, blAppUUID)
+                    ?.listenUsingRfcommWithServiceRecord(blAppName, blAppUUID)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
