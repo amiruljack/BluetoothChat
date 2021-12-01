@@ -47,10 +47,6 @@ class ChatApplication : Application(), LifecycleObserver, ThemeHolder {
             Fabric.with(this, Crashlytics())
 
         }
-        else
-            println(
-                "sabrina"
-            )
 
         startKoin(this, listOf(applicationModule,
                 bluetoothConnectionModule, databaseModule, localStorageModule, viewModule))
