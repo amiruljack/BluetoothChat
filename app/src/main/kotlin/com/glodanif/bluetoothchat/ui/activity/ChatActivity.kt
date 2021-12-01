@@ -292,6 +292,9 @@ class ChatActivity : SkeletonActivity(), ChatView {
         chatAdapter.messages.addFirst(message)
         chatAdapter.notifyItemInserted(0)
         chatLayoutManager.scrollToPosition(0)
+        //println("test receive ${ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012")}")
+        //message.body = ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012");
+
         println("1352")
     }
 
