@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_contact"
+        android:background="#f0f8ff"
         tools:itemCount="3"/>
 
     <TextView

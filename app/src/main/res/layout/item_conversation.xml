@@ -40,7 +40,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_weight="0"
                 android:contentDescription="@string/conversations__cd__connected_indicator"
-                android:tint="@color/colorAccent"
+                android:tint="#0000cd"
                 app:srcCompat="@drawable/ic_link_black_24dp" />
 
             <TextView
@@ -50,6 +50,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:textSize="14dp"
                 android:textColor="@color/text_text_message"
                 tools:text="@tools:sample/full_names" />
 
@@ -61,8 +62,8 @@
                 android:layout_weight="0"
                 android:fontFamily="sans-serif-light"
                 android:gravity="top"
-                android:textColor="#aaa"
-                android:textSize="12sp"
+                android:textColor="#737373"
+                android:textSize="12dp"
                 android:visibility="gone"
                 tools:text="@tools:sample/date/ddmmyy"
                 tools:visibility="visible" />
@@ -86,7 +87,7 @@
                 android:gravity="center_vertical"
                 android:lines="1"
                 android:textColor="#aaa"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
@@ -95,7 +96,7 @@
                 android:layout_height="18dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="0"
-                android:background="@drawable/badge_circle"
+                android:background="#0000cd"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"

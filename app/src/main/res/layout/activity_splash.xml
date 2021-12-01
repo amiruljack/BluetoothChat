@@ -7,9 +7,20 @@
     android:padding="24dp">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="bottom|end"
         android:contentDescription="@null"
         app:srcCompat="@drawable/ic_bluetooth_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="275dp"
+        android:fontFamily="sans-serif-black"
+        android:text="BLUETOOTH\n CHAT"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="40dp" />
 </FrameLayout>

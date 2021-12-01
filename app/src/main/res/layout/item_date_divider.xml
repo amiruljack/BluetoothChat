@@ -12,7 +12,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/budge_date_divider"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
+        android:textSize="15dp"
         android:textStyle="bold"
         tools:text="September 17" />
 </FrameLayout>

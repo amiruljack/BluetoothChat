@@ -66,19 +66,9 @@ class SettingsPopup(context: Context) : PopupWindow() {
             clickListener?.invoke(Option.PROFILE)
         }
 
-        rootView.findViewById<View>(R.id.ll_images_button).setOnClickListener {
-            dismiss()
-            clickListener?.invoke(Option.IMAGES)
-        }
-
         rootView.findViewById<View>(R.id.ll_settings_button).setOnClickListener {
             dismiss()
             clickListener?.invoke(Option.SETTINGS)
-        }
-
-        rootView.findViewById<View>(R.id.ll_about_button).setOnClickListener {
-            dismiss()
-            clickListener?.invoke(Option.ABOUT)
         }
 
         contentView = rootView

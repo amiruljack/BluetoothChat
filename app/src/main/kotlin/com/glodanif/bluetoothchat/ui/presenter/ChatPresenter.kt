@@ -139,6 +139,7 @@ class ChatPresenter(private val deviceAddress: String,
     private val messageListener = object : OnMessageListener {
 
         override fun onMessageReceived(message: ChatMessage) {
+            println("877")
             view.showReceivedMessage(converter.transform(message))
         }
 
@@ -426,8 +427,10 @@ class ChatPresenter(private val deviceAddress: String,
         connectionModel.getTransferringFile().let { file ->
 
             if (file != null) {
+                println("026")
                 val type = if (file.transferType == TransferringFile.TransferType.RECEIVING)
-                    ChatView.FileTransferType.RECEIVING else ChatView.FileTransferType.SENDING
+                    ChatView.FileTransferType.RECEIVING
+                else ChatView.FileTransferType.SENDING
                 view.showImageTransferLayout(file.name, file.size, type)
             } else {
                 view.hideImageTransferLayout()

@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="#333333"
+        android:textSize="14dp"
+        android:textColor="#0000cd"
         tools:text="@tools:sample/full_names" />
 </LinearLayout>

@@ -120,10 +120,6 @@ class ChatActivity : SkeletonActivity(), ChatView {
             presenter.sendMessage(messageField.text.toString().trim())
         }
 
-        findViewById<ImageButton>(R.id.ib_image).setOnClickListener {
-            presenter.performFilePicking()
-        }
-
         findViewById<ImageButton>(R.id.ib_cancel).setOnClickListener {
             presenter.cancelFileTransfer()
         }
@@ -145,14 +141,18 @@ class ChatActivity : SkeletonActivity(), ChatView {
         }
 
         scrollBehavior = ScrollAwareBehavior(this).apply {
-            onHideListener = { goDownButton.setUnreadMessageNumber(0) }
+            onHideListener = { goDownButton.setUnreadMessageNumber(0)
+            println("132")}
         }
 
+        println("4532")
         val params = goDownButton.layoutParams as CoordinatorLayout.LayoutParams
         params.behavior = scrollBehavior
         goDownButton.requestLayout()
 
+        println("424")
         chatAdapter = ChatAdapter().apply {
+            println("1232")
             imageClickListener = { view, message ->
                 ImagePreviewActivity.start(this@ChatActivity, view, message)
             }
@@ -228,6 +228,7 @@ class ChatActivity : SkeletonActivity(), ChatView {
 
     override fun afterMessageSent() {
         messageField.text = null
+        println("187")
     }
 
     override fun showNotConnectedToThisDevice(currentDevice: String) {
@@ -280,7 +281,9 @@ class ChatActivity : SkeletonActivity(), ChatView {
         chatAdapter.notifyItemInserted(0)
         if (!scrollBehavior.isChildShown()) {
             chatLayoutManager.scrollToPosition(0)
+            println("241")
         } else {
+            println("154")
             goDownButton.setUnreadMessageNumber(goDownButton.getUnreadMessageNumber() + 1)
         }
     }
@@ -289,6 +292,7 @@ class ChatActivity : SkeletonActivity(), ChatView {
         chatAdapter.messages.addFirst(message)
         chatAdapter.notifyItemInserted(0)
         chatLayoutManager.scrollToPosition(0)
+        println("1352")
     }
 
     override fun showSendingMessageFailure() {
@@ -481,7 +485,6 @@ class ChatActivity : SkeletonActivity(), ChatView {
                 presenter.onBluetoothEnablingFailed()
             }
         } else {
-
             EasyImage.handleActivityResult(requestCode, resultCode, data, this, object : DefaultCallback() {
 
                 override fun onImagesPicked(imageFiles: MutableList<File>, source: EasyImage.ImageSource?, type: Int) {
@@ -502,25 +505,9 @@ class ChatActivity : SkeletonActivity(), ChatView {
             })
         }
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_images -> {
-                ReceivedImagesActivity.start(this, deviceAddress)
-                true
-            }
-            R.id.action_disconnect -> {
-                presenter.disconnect()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     companion object {
 
         private const val REQUEST_ENABLE_BLUETOOTH = 101
-
         const val EXTRA_ADDRESS = "extra.address"
         private const val EXTRA_MESSAGE = "extra.message"
         private const val EXTRA_FILE_PATH = "extra.file_path"
@@ -532,6 +519,7 @@ class ChatActivity : SkeletonActivity(), ChatView {
         }
 
         fun start(context: Context, address: String, message: String?, filePath: String?) {
+            println("158")
             val intent: Intent = Intent(context, ChatActivity::class.java)
                     .setAction(Intent.ACTION_SEND)
                     .putExtra(EXTRA_ADDRESS, address)

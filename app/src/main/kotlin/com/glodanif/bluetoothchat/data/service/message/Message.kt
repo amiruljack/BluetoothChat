@@ -23,6 +23,7 @@ class Message() {
 
         val parsedType = messageText.substring(0, messageText.indexOf(Contract.DIVIDER))
         if (!parsedType.isNumber()) {
+            println("1235")
             type = Contract.MessageType.UNEXPECTED
             return
         }
@@ -71,9 +72,8 @@ class Message() {
     }
 
     fun getDecodedMessage(): String {
+        println("0021")
         val flag = if (this.flag) 1 else 0
         return "${type.value}${Contract.DIVIDER}$uid${Contract.DIVIDER}$flag${Contract.DIVIDER}${body}"
     }
-
-
 }

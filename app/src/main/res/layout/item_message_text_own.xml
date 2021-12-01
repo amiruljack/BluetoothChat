@@ -31,16 +31,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:textSize="10sp"
+                android:textSize="12dp"
                 tools:text="12:07" />
 
             <TextView
                 android:id="@+id/tv_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textColor="@color/text_text_message"
                 android:textIsSelectable="true"
+                android:textSize="14dp"
                 tools:text="@tools:sample/lorem" />
 
         </LinearLayout>

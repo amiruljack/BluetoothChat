@@ -16,6 +16,7 @@ import com.glodanif.bluetoothchat.data.model.ConversationsStorage
 import com.glodanif.bluetoothchat.data.model.MessagesStorage
 import com.glodanif.bluetoothchat.data.model.ProfileManager
 import com.glodanif.bluetoothchat.data.model.UserPreferences
+import com.glodanif.bluetoothchat.data.service.ChCrypto
 import com.glodanif.bluetoothchat.data.service.message.Contract
 import com.glodanif.bluetoothchat.data.service.message.Message
 import com.glodanif.bluetoothchat.data.service.message.PayloadType
@@ -30,16 +31,17 @@ import java.io.IOException
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class ConnectionController(private val application: ChatApplication,
-                           private val subject: ConnectionSubject,
-                           private val view: NotificationView,
-                           private val conversationStorage: ConversationsStorage,
-                           private val messagesStorage: MessagesStorage,
-                           private val preferences: UserPreferences,
-                           private val profileManager: ProfileManager,
-                           private val shortcutManager: ShortcutManager,
-                           private val uiContext: CoroutineDispatcher = Dispatchers.Main,
-                           private val bgContext: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
+class ConnectionController(
+    private val application: ChatApplication,
+    private val subject: ConnectionSubject,
+    private val view: NotificationView,
+    private val conversationStorage: ConversationsStorage,
+    private val messagesStorage: MessagesStorage,
+    private val preferences: UserPreferences,
+    private val profileManager: ProfileManager,
+    private val shortcutManager: ShortcutManager,
+    private val uiContext: CoroutineDispatcher = Dispatchers.Main,
+    private val bgContext: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
 
     private val blAppName = application.getString(R.string.bl_app_name)
     private val blAppUUID = UUID.fromString(application.getString(R.string.bl_app_uuid))
@@ -284,7 +286,7 @@ class ConnectionController(private val application: ChatApplication,
                     subject.handleFileReceivingStarted(file.size)
 
                     currentConversation?.let {
-
+                        println("9984")
                         val silently = application.currentChat != null && currentSocket != null &&
                                 application.currentChat.equals(currentSocket?.remoteDevice?.address)
 
@@ -340,6 +342,7 @@ class ConnectionController(private val application: ChatApplication,
                             subject.handleFileReceivingFinished()
                             subject.handleMessageReceived(message)
 
+                            println("921")
                             view.dismissFileTransferNotification()
                             currentConversation?.let {
                                 shortcutManager.addConversationShortcut(address, it.displayName, it.color)
@@ -400,11 +403,13 @@ class ConnectionController(private val application: ChatApplication,
 
         if (isConnectedOrPending()) {
 
+            println("097")
             val disconnect = message.type == Contract.MessageType.CONNECTION_REQUEST && !message.flag
 
             dataTransferThread?.write(message.getDecodedMessage(), disconnect)
 
             if (disconnect) {
+                println("096")
                 dataTransferThread?.cancel(disconnect)
                 dataTransferThread = null
                 prepareForAccept()
@@ -412,6 +417,7 @@ class ConnectionController(private val application: ChatApplication,
         }
 
         if (message.type == Contract.MessageType.CONNECTION_RESPONSE) {
+            println("098")
             if (message.flag) {
                 connectionState = ConnectionState.CONNECTED
             } else {
@@ -424,7 +430,9 @@ class ConnectionController(private val application: ChatApplication,
     fun sendFile(file: File, type: PayloadType) {
 
         if (isConnected()) {
+            println("028")
             contract.createFileStartMessage(file, type).let { message ->
+                println("027")
                 dataTransferThread?.write(message.getDecodedMessage())
                 dataTransferThread?.writeFile(message.uid, file)
             }
@@ -432,6 +440,7 @@ class ConnectionController(private val application: ChatApplication,
     }
 
     fun approveConnection() {
+        println("094")
         sendMessage(contract.createAcceptConnectionMessage(
                 profileManager.getUserName(), profileManager.getUserColor()))
     }
@@ -456,15 +465,19 @@ class ConnectionController(private val application: ChatApplication,
         val message = Message(messageBody)
         val sentMessage = ChatMessage(message.uid, socket.remoteDevice.address, Date(), true, message.body)
 
+        println("082")
         if (message.type == Contract.MessageType.MESSAGE) {
 
+            println("091")
             sentMessage.seenHere = true
 
             launch(bgContext) {
 
+                println("078")
                 messagesStorage.insertMessage(sentMessage)
                 shallowHistory.add(NotificationCompat.MessagingStyle.Message(sentMessage.text, sentMessage.date.time, me))
-
+//                sentMessage.text = ChCrypto.aesEncrypt(sentMessage.text,"12345678901234567890123456789012").toString();
+                println("test send ${ChCrypto.aesEncrypt(sentMessage.text,"12345678901234567890123456789012").toString()}")
                 if ((!subject.isAnybodyListeningForMessages() || application.currentChat == null || !application.currentChat.equals(device.address)) && justRepliedFromNotification) {
                     view.showNewMessageNotification(message.body, currentConversation?.displayName,
                             device.name, device.address, shallowHistory, preferences.isSoundEnabled())
@@ -483,15 +496,17 @@ class ConnectionController(private val application: ChatApplication,
 
         val message = Message(messageBody)
 
+        println("421")
         if (message.type == Contract.MessageType.MESSAGE && currentSocket != null) {
 
-
+            println("821")
             handleReceivedMessage(message.uid, message.body)
-//            decryptWithAES("1234",)
-
+            println("test receive ${ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012")}")
+//            message.body = ChCrypto.aesDecrypt(message.body.toString(),"12345678901234567890123456789012");
         } else if (message.type == Contract.MessageType.DELIVERY) {
 
             if (message.flag) {
+                println("022")
                 subject.handleMessageDelivered(message.uid)
             } else {
                 subject.handleMessageNotDelivered(message.uid)
@@ -499,11 +514,13 @@ class ConnectionController(private val application: ChatApplication,
         } else if (message.type == Contract.MessageType.SEEING) {
 
             if (message.flag) {
+                println("021")
                 subject.handleMessageSeen(message.uid)
             }
         } else if (message.type == Contract.MessageType.CONNECTION_RESPONSE) {
 
             if (message.flag) {
+                println("023")
                 handleConnectionApproval(message)
             } else {
                 connectionState = ConnectionState.REJECTED
@@ -513,8 +530,10 @@ class ConnectionController(private val application: ChatApplication,
         } else if (message.type == Contract.MessageType.CONNECTION_REQUEST && currentSocket != null) {
 
             if (message.flag) {
+                println("024")
                 handleConnectionRequest(message)
             } else {
+                println("025")
                 disconnect()
                 subject.handleDisconnected()
             }
@@ -539,11 +558,14 @@ class ConnectionController(private val application: ChatApplication,
         if (!subject.isAnybodyListeningForMessages() || application.currentChat == null || !application.currentChat.equals(device.address)) {
             view.showNewMessageNotification(text, currentConversation?.displayName,
                     device.name, device.address, shallowHistory, preferences.isSoundEnabled())
+            println("005")
         } else {
+            println("003")
             receivedMessage.seenHere = true
         }
 
         launch(bgContext) {
+            println("008")
             messagesStorage.insertMessage(receivedMessage)
             launch(uiContext) { subject.handleMessageReceived(receivedMessage) }
             currentConversation?.let {
@@ -581,7 +603,8 @@ class ConnectionController(private val application: ChatApplication,
         val conversation = Conversation(device.address, device.name
                 ?: "?", parts[0], parts[1].toInt())
 
-        launch(bgContext) { conversationStorage.insertConversation(conversation) }
+        launch(bgContext) { conversationStorage.insertConversation(conversation)
+        println("002")}
 
         currentConversation = conversation
         contract setupWith if (parts.size >= 3) parts[2].trim().toInt() else 0

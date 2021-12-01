@@ -40,6 +40,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
+            android:background="#f0f8ff"
             tools:visibility="visible">
 
             <View
@@ -56,12 +57,14 @@
             <Button
                 android:id="@+id/btn_make_discoverable"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/scan__make_discoverable"
-                android:textColor="@drawable/button_text_color"
+                android:background="#0000cd"
+                android:textColor="#ffffff"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toTopOf="@+id/rv_paired_devices"
                 app:layout_constraintLeft_toRightOf="@+id/btn_scan"
                 app:layout_constraintRight_toRightOf="parent"
@@ -71,11 +74,13 @@
             <Button
                 android:id="@+id/btn_scan"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/scan__scan_for_devices"
-                android:textColor="@drawable/button_text_color"
+                android:textSize="14dp"
+                android:background="#0000cd"
+                android:textColor="#ffffff"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btn_make_discoverable"
@@ -85,13 +90,13 @@
                 android:id="@+id/tv_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/scan__start_scanning"
+                android:textSize="16dp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -99,8 +104,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_paired_devices"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f0f8ff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -113,13 +119,14 @@
                 android:id="@+id/tv_discovery_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/text_dark"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/scan__scanning"
+                android:textColor="@color/text_dark"
+                android:textSize="16dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/epb_progress"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +140,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/tv_discovery_label"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -181,40 +188,14 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/barrier3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:text="@string/scan__share_apk"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_share"
-        app:layout_constraintEnd_toStartOf="@+id/iv_share"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_share" />
-
-    <ImageView
-        android:id="@+id/iv_share"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_weight="0"
-        android:contentDescription="@string/scan__cd__share_apk_file_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_share_black_24dp" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="textView6,iv_share"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
