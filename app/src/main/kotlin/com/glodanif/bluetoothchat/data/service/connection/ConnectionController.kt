@@ -16,6 +16,7 @@ import com.glodanif.bluetoothchat.data.model.ConversationsStorage
 import com.glodanif.bluetoothchat.data.model.MessagesStorage
 import com.glodanif.bluetoothchat.data.model.ProfileManager
 import com.glodanif.bluetoothchat.data.model.UserPreferences
+import com.glodanif.bluetoothchat.data.service.ChCrypto
 import com.glodanif.bluetoothchat.data.service.message.Contract
 import com.glodanif.bluetoothchat.data.service.message.Message
 import com.glodanif.bluetoothchat.data.service.message.PayloadType
@@ -416,8 +417,11 @@ class ConnectionController(
 
         if (isConnectedOrPending()) {
 
-            println("097")
+            println("097${message.body}")
             val disconnect = message.type == Contract.MessageType.CONNECTION_REQUEST && !message.flag
+            if(!message.body.contains("#")){
+                message.body = ChCrypto.aesEncrypt(message.body,"12345678901234567890123456789012");
+            }
 
             dataTransferThread?.write(message.getDecodedMessage(), disconnect)
 
@@ -584,7 +588,8 @@ class ConnectionController(
         }
 
         launch(bgContext) {
-            println("008")
+            println("008${receivedMessage}")
+            receivedMessage.text = ChCrypto.aesDecrypt(receivedMessage.text,"12345678901234567890123456789012")
             messagesStorage.insertMessage(receivedMessage)
             launch(uiContext) { subject.handleMessageReceived(receivedMessage) }
             currentConversation?.let {
