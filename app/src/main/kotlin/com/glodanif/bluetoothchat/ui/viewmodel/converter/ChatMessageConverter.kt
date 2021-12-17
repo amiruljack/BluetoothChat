@@ -3,6 +3,7 @@ package com.glodanif.bluetoothchat.ui.viewmodel.converter
 import android.content.Context
 import com.glodanif.bluetoothchat.R
 import com.glodanif.bluetoothchat.data.entity.ChatMessage
+import com.glodanif.bluetoothchat.data.service.ChCrypto
 import com.glodanif.bluetoothchat.ui.viewmodel.ChatMessageViewModel
 import com.glodanif.bluetoothchat.utils.Size
 import com.glodanif.bluetoothchat.utils.getDisplayMetrics
@@ -43,7 +44,7 @@ class ChatMessageConverter(context: Context) {
                 dayOfYearFormat.format(message.date),
                 dayOfYearRawFormat.format(message.date).toLong(),
                 timeFormat.format(message.date),
-                message.text,
+                ChCrypto.aesDecrypt(message.text,"12345678901234567890123456789012"),
                 message.own,
                 message.messageType,
                 isImageAvailable,
