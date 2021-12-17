@@ -27,7 +27,7 @@ private object AES256{
     }
     fun decrypt(str:String, secretKey:String):String{
         println("aesDecrypt-str${str}")
-        if(!str.contains("==")){
+        if(!str.contains("==")||!str.contains("=")||str.contains(" ")){
             return str
         }
         val byteStr = decorder.decode(str.toByteArray(Charsets.UTF_8))
