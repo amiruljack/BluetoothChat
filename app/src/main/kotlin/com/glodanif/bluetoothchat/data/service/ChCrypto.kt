@@ -26,6 +26,9 @@ private object AES256{
         return String(encorder.encode(encrypted))
     }
     fun decrypt(str:String, secretKey:String):String{
+        if(str.contains("#")){
+            return str
+        }
         val byteStr = decorder.decode(str.toByteArray(Charsets.UTF_8))
         return String(cipher(Cipher.DECRYPT_MODE, secretKey).doFinal(byteStr))
     }
