@@ -38,12 +38,13 @@ class ChatMessageConverter(context: Context) {
                 height = scaledSize.height
             }
         }
-
+        //DALAM CHAT LIST
         return ChatMessageViewModel(
                 message.uid,
                 dayOfYearFormat.format(message.date),
                 dayOfYearRawFormat.format(message.date).toLong(),
                 timeFormat.format(message.date),
+            //DALAM CHAT LIST
                 ChCrypto.aesDecrypt(message.text,"12345678901234567890123456789012"),
                 message.own,
                 message.messageType,

@@ -589,7 +589,8 @@ class ConnectionController(
 
         launch(bgContext) {
             println("008${receivedMessage}")
-            receivedMessage.text = ChCrypto.aesDecrypt(receivedMessage.text,"12345678901234567890123456789012")
+            //MASA DAPAT BEFORE MASUK DALAM DB
+//            receivedMessage.text = ChCrypto.aesDecrypt(receivedMessage.text,"12345678901234567890123456789012")
             messagesStorage.insertMessage(receivedMessage)
             launch(uiContext) { subject.handleMessageReceived(receivedMessage) }
             currentConversation?.let {

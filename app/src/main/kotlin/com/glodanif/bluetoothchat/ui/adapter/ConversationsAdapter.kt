@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.glodanif.bluetoothchat.R
+import com.glodanif.bluetoothchat.data.service.ChCrypto
 import com.glodanif.bluetoothchat.ui.viewmodel.ConversationViewModel
 
 class ConversationsAdapter : RecyclerView.Adapter<ConversationsAdapter.ConversationViewHolder>() {
@@ -33,8 +34,9 @@ class ConversationsAdapter : RecyclerView.Adapter<ConversationsAdapter.Conversat
         }
 
         if (conversation.lastMessage != null) {
+            //DALAM CHAT LIST DEPAN
             holder.messageContainer.visibility = View.VISIBLE
-            holder.lastMessage.text = conversation.lastMessage
+            holder.lastMessage.text = ChCrypto.aesDecrypt(conversation.lastMessage, "12345678901234567890123456789012")
         } else {
             holder.messageContainer.visibility = View.GONE
         }
